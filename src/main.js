@@ -73,37 +73,82 @@ const cepInputMasked = IMask(cepInput, cepInputPattern)
 const btnSearch = get("#btnSearch")
 
 
+// btnSearch.addEventListener('click', () => {
+//     console.log(cepInputMasked.unmaskedValue)
+//     if (cepInputMasked.unmaskedValue.length !== 8) {
+//         alert(`Insira um CEP válido.`)
+//     } else {
+//         const keyToSearch = cepInputMasked.unmaskedValue
+        
+//         const find = tree.search(Number(keyToSearch))
+
+//         resultP.style.display = "block"
+
+//         if (find) {
+//             loaderInsideForm.style.display = "block"
+//             var node = tree.getNode(Number(keyToSearch))
+//             node.key.print()
+//             setTimeout(() => {
+//                 resultP.innerText = `CEP ${cepInputMasked.value} encontrado.`
+//                 dataResultDiv.style.display = "block"
+//                 const cepValue = get("#cep .data-value")
+//                 cepValue.innerText = node.key.zipCode
+//                 const neighValue = get("#bairro .data-value")
+//                 neighValue.innerText = node.key.neighborhood
+//                 const cityValue = get("#cidade .data-value")
+//                 cityValue.innerText = node.key.city
+//                 const streetValue = get("#endereco .data-value")
+//                 streetValue.innerText = node.key.street
+//                 const complementValue = get("#complemento .data-value")
+//                 complementValue.innerText = node.key.complement
+//             }, 1000)
+//         } else {
+//             resultP.innerText = `CEP ${cepInputMasked.value} não encontrado.`
+//         }
+//     }
+// })
+
 btnSearch.addEventListener('click', () => {
     console.log(cepInputMasked.unmaskedValue)
+    dataResultDiv.style.display = "none"
+    resultP.style.display = "none"
+
     if (cepInputMasked.unmaskedValue.length !== 8) {
-        alert(`Insira um CEP válido.`)
+        alert("Insira um CEP válido.")
     } else {
-        const keyToSearch = cepInputMasked.unmaskedValue
-        const find = tree.search(Number(keyToSearch))
+        loaderInsideForm.style.display = "block";
+        btnSearch.classList.add("deactivate")
+        setTimeout(() => {
+            const keyToSearch = cepInputMasked.unmaskedValue
 
-        resultP.style.display = "block"
+            const find = tree.search(Number(keyToSearch))
 
-        if (find) {
-            loaderInsideForm.style.display = "block"
-            var node = tree.getNode(Number(keyToSearch))
-            node.key.print()
-            setTimeout(() => {
-                resultP.innerText = `CEP ${cepInputMasked.value} encontrado.`
-                dataResultDiv.style.display = "block"
-                const cepValue = get("#cep .data-value")
-                cepValue.innerText = node.key.zipCode
-                const neighValue = get("#bairro .data-value")
-                neighValue.innerText = node.key.neighborhood
-                const cityValue = get("#cidade .data-value")
-                cityValue.innerText = node.key.city
-                const streetValue = get("#endereco .data-value")
-                streetValue.innerText = node.key.street
-                const complementValue = get("#complemento .data-value")
-                complementValue.innerText = node.key.complement
-            }, 1000)
-        } else {
-            resultP.innerText = `CEP ${cepInputMasked.value} não encontrado.`
-        }
+            resultP.style.display = "block"
+
+            if (find) {
+                var node = tree.getNode(Number(keyToSearch))
+                node.key.print()
+                //setTimeout(() => {
+                    resultP.innerText = `CEP ${cepInputMasked.value} encontrado.`
+                    dataResultDiv.style.display = "block"
+                    const cepValue = get("#cep .data-value")
+                    cepValue.innerText = node.key.zipCode
+                    const neighValue = get("#bairro .data-value")
+                    neighValue.innerText = node.key.neighborhood
+                    const cityValue = get("#cidade .data-value")
+                    cityValue.innerText = node.key.city
+                    const streetValue = get("#endereco .data-value")
+                    streetValue.innerText = node.key.street
+                    const complementValue = get("#complemento .data-value")
+                    complementValue.innerText = node.key.complement
+                //}, 1000)
+            } else {
+                resultP.innerText = `CEP ${cepInputMasked.value} não encontrado.`
+            }
+            loaderInsideForm.style.display = "none";
+            btnSearch.classList.remove("deactivate")
+        }, 1000)
+
     }
 })
 
